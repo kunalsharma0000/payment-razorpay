@@ -1,0 +1,38 @@
+<!-- razorpay-checkout.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Razorpay Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        const options = {
+          key: "rzp_test_xxxxxxx", // Replace with your Razorpay key
+          amount: window.amount,
+          currency: "INR",
+          name: "Global Health Insurance",
+          description: "Premium Payment",
+          order_id: window.orderId,
+          handler: function (response) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              success: true,
+              response: response
+            }));
+          },
+          prefill: {
+            name: window.prefillName,
+            email: window.prefillEmail,
+            contact: window.prefillContact
+          },
+          theme: {
+            color: "#28a745"
+          }
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
+      };
+    </script>
+  </body>
+</html>
